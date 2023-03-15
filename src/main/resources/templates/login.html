@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org">
+<head>
+
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            background-image: linear-gradient(to bottom right, #33475b, #0033CC, #FF77CC, rgb(255, 122, 89));
+        }
+    </style>
+
+</head>
+<body>
+<header></header>
+<section>
+    <form style="background: white" th:action="@{/login}" method="post">
+        <header>
+            <h2>Login form</h2>
+        </header>
+        <label>Email:</label>
+        <input type="text" name="username" size="20" placeholder="email">
+        <label>Password:</label>
+        <input type="password" name="password" size="20" placeholder="password">
+        <div><input type="submit" value="Sign In"/></div>
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+    </form>
+</section>
+</body>
+</html>

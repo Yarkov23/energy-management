@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org"
+      xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            background-image: linear-gradient(to bottom right, #33475b, #0033CC, #FF77CC, rgb(255, 122, 89));
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Add user</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
+            <ul>
+                <li><a href="/admin" style="color: white">Back</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <form style="background: white" action="#" th:action="@{/admin/create}" th:object="${user}" method="post">
+            <p>Email: <input type="text" th:field="*{email}" /></p>
+            <p>Password: <input type="text" th:field="*{password}" /></p>
+            <p>
+                <select th:field="*{companyName}" class="form-control" id="dropDownCompany">
+                    <option value="0">select option</option>
+                    <option th:each="company : ${companyList}" th:value="${company.getName()}" th:text="${company.getName()}"></option>
+                </select>
+            </p>
+            <p>
+                <select th:field="*{roles}" class="form-control" id="dropDownRole">
+                    <option value="0">select option</option>
+                    <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+                </select>
+            </p>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+    </section>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <meta charset="utf-8">
+    <meta name="description" content="My description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            background-image: linear-gradient(to bottom right, #33475b, #0033CC, #FF77CC, rgb(255, 122, 89));
+        }
+    </style>
+
+    <title>Energy management</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
+                <ul>
+                    <li><a href="/" style="color: white">FAQ</a></li>
+                    <li><a href="/" style="color: white">About</a></li>
+                    <li><a href="/profile" style="color: white">Profile</a>
+                        <ul>
+                            <li><a href="/admin" style="color: black"sec:authorize="hasRole('ADMIN')"> Admin panel </a></li>
+                            <li><a th:action="@{/logout}" href="/login" method="post" style="color: black"> Sign out </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <h1 style="color: white">Energy management system</h1>
+            <p style="color: white">Website for energy expense monitoring and comfortable calculations</p>
+            <br>
+            <p><a href="/"><i>FAQ</i></a><a href="/"><b>Start right now →</b></a></p>
+    </header>
+
+</body>
+</html>
