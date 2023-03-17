@@ -6,6 +6,7 @@ import com.yarkov.energymanagement.repository.CompanyRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CompanyService extends AbstractDBService<Company, Long, CompanyRepo> {
@@ -37,4 +38,5 @@ public class CompanyService extends AbstractDBService<Company, Long, CompanyRepo
     public Company findByName(String name) {
         return repository.findCompanyByName(name);
     }
+
 }

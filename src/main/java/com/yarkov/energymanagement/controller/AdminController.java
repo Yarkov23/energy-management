@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -82,6 +80,9 @@ public class AdminController {
         try {
             var user = userService.findById(id);
             model.addAttribute("user", user);
+            model.addAttribute("companyList", companyService.getAll());
+            model.addAttribute("allRoles", List.of(new Role("ROLE_USER"),
+                    new Role("ROLE_ADMIN")));
             return "updateUserForm";
         } catch (NotFoundException e) {
             throw new RuntimeException(e);

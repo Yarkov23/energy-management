@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org"
+      xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
     <meta charset="UTF-8">
     <title>Update user</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            background-image: linear-gradient(to bottom right, #33475b, #0033CC, #FF77CC, rgb(255, 122, 89));
+        }
+    </style>
 </head>
 <body>
-
+<header>
+    <nav>
+        <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
+        <ul>
+            <li><a href="/admin" style="color: white">Back</a></li>
+        </ul>
+    </nav>
+</header>
+<section>
+    <form style="background: white" th:action="@{/admin/update}" th:object="${user}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required="required"/>
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" required="required"/>
+        <select th:field="*{roleList}">
+            <option value="">-- Select Role --</option>
+            <option th:each="role : ${allRoles}" th:value="${role}" th:text="${role}"></option>
+        </select>
+        <br/>
+        <label for="company">Company:</label>
+        <select id="company" th:field="*{company.id}" required="required">
+            <option th:each="c : ${companyList}" th:value="${c.id}" th:text="${c.name}" th:selected="${c.id == user.company?.id}"/>
+        </select>
+        <br/>
+        <input type="submit" value="Save"/>
+    </form>
+</section>
 </body>
 </html>

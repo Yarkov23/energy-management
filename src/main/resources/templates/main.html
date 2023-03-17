@@ -8,18 +8,18 @@
     <meta name="description" content="My description">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
+<!--    <style>
         html {
             height: 100%;
         }
         body {
             background-image: linear-gradient(to bottom right, #33475b, #0033CC, #FF77CC, rgb(255, 122, 89));
         }
-    </style>
+    </style>-->
 
     <title>Energy management</title>
 </head>
-<body>
+<body style="background: darkblue">
     <header>
         <nav>
             <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
@@ -36,9 +36,40 @@
             </nav>
             <h1 style="color: white">Energy management system</h1>
             <p style="color: white">Website for energy expense monitoring and comfortable calculations</p>
-            <br>
-            <p><a href="/"><i>FAQ</i></a><a href="/"><b>Start right now →</b></a></p>
+
     </header>
 
+    <main>
+        <hr>
+        <section>
+            <header>
+                <h2 style="color: white">Reasons to use this system</h2>
+                <p style="color: white">Three main reasons:</p>
+            </header>
+            <aside style="background: white">
+                <img alt="img1" src="./img/html.svg" height="150">
+                <h3>Convenient use</h3>
+                <p>User-friendly and minimalistic interface</p>
+            </aside>
+            <aside style="background: white">
+                <img alt="img2" src="./img/mobile.svg" height="150">
+                <h3>Fast response system</h3>
+                <p>System design for fast and convenient using.</p>
+            </aside>
+            <aside style="background: white">
+                <img alt="img3" src="./img/license.svg" height="150">
+                <h3>Functionality</h3>
+                <p>Effective and simple functional interface for energy management.</p>
+            </aside>
+        </section>
+    </main>
+
+    <footer>
+        <hr>
+        <p style="color: white">
+            Made by <a href="https://github.com/Yarkov23" target="_blank">Striukov Yaroslav
+            ↗</a><br>
+        </p>
+    </footer>
 </body>
 </html>
