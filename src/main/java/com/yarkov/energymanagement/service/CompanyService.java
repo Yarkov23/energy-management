@@ -6,37 +6,15 @@ import com.yarkov.energymanagement.repository.CompanyRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
-public class CompanyService extends AbstractDBService<Company, Long, CompanyRepo> {
+public class CompanyService extends BaseService<Company, Long, CompanyRepo> {
 
     public CompanyService(CompanyRepo repository) {
         super(repository);
     }
 
-    @Override
-    public void save(Company entity) {
-        super.save(entity);
-    }
-
-    @Override
-    public List<Company> getAll() {
-        return super.getAll();
-    }
-
-    @Override
-    public void delete(Company entity) {
-        super.delete(entity);
-    }
-
-    @Override
-    public Company findById(Long aLong) throws NotFoundException {
-        return super.findById(aLong);
-    }
-
     public Company findByName(String name) {
         return repository.findCompanyByName(name);
     }
-
 }

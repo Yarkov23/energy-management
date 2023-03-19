@@ -27,16 +27,16 @@
     </header>
     <section>
         <form style="background: white" action="#" th:action="@{/admin/create}" th:object="${user}" method="post">
-            <p>Email: <input type="text" th:field="*{email}" /></p>
-            <p>Password: <input type="text" th:field="*{password}" /></p>
+            <p>Email: <input type="text" th:field="*{email}" required="required" /></p>
+            <p>Password: <input type="text" th:field="*{password}" required="required"/></p>
             <p>
-                <select th:field="*{companyName}" class="form-control" id="dropDownCompany">
+                <select th:field="*{companyName}" class="form-control" id="dropDownCompany" required="required">
                     <option value="0">select option</option>
                     <option th:each="company : ${companyList}" th:value="${company.getName()}" th:text="${company.getName()}"></option>
                 </select>
             </p>
             <p>
-                <select th:field="*{roles}" class="form-control" id="dropDownRole">
+                <select th:field="*{roles}" class="form-control" id="dropDownRole" required="required">
                     <option value="0">select option</option>
                     <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
                 </select>
