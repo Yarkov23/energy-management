@@ -27,13 +27,13 @@ public class Expense {
     @JoinColumn(name = "resource_id")
     private Resource resource;
 
-    @Column(name = "useAmount")
+    @Column(name = "use_amount")
     private Double useAmount;
 
-    @Column(name = "expensesYear")
+    @Column(name = "expenses_year")
     private Integer expensesYear;
 
-    @Column(name = "expensesMonth")
+    @Column(name = "expenses_month")
     private Integer expensesMonth;
 
 }

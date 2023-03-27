@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <title>Expenses Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body style="background: black">
+<header>
+    <nav>
+        <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
+        <ul>
+            <li><a href="/" style="color: white">FAQ</a></li>
+            <li><a href="/" style="color: white">About</a></li>
+            <li><a href="/profile" style="color: white">Profile</a>
+                <ul>
+                    <li><a th:action="@{/logout}" href="/login" method="post" style="color: black"> Sign out </a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <section>
+        <header>
+            <h1 style="color: white">Expenses Dashboard</h1>
+        </header>
+        <table style="background: white">
+            <tr>
+                <th>Company</th>
+                <th>Resource</th>
+                <th>Use Amount</th>
+                <th>Expenses Month</th>
+                <th>Expenses Year</th>
+            </tr>
+            <tr th:each="expense : ${expenses}">
+                <td th:text="${expense.company.getName()}"></td>
+                <td th:text="${expense.resource.getResourceName()}"></td>
+                <td th:text="${expense.useAmount}"></td>
+                <td th:text="${expense.expensesMonth}"></td>
+                <td th:text="${expense.expensesYear}"></td>
+            </tr>
+        </table>
+    </section>
+</header>
+<main>
+    <hr>
+    <section>
+        <header>
+            <h1 style="color: white">Expenses Chart</h1>
+        </header>
+        <header>
+        <h3 style="color: white">Resource Use Amount by Month</h3>
+            <form th:action="@{/profile/average-consumption}" method="post">
+                <label for="year">Select Year:</label>
+                <select id="year" name="year" style="background: white">
+                    <option th:each="y : ${years}" th:value="${y}" th:text="${y}"></option>
+                </select>
+                <button type="submit">Generate Chart</button>
+            </form>
+        </header>
+        <canvas id="myChart"></canvas>
+        <script th:inline="javascript" style="background: white">
+            let ctx = document.getElementById('myChart').getContext('2d');
+            let chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [[${monthLabelList}]],
+                    datasets: [{
+                        label: 'Resource Use Amount',
+                        data: [[${useAmountList}]],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        </script>
+    </section>
+</main>
+</body>
+</html>

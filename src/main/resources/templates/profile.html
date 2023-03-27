@@ -6,11 +6,63 @@
     <meta charset="UTF-8">
     <title>Profile</title>
 </head>
-<body>
-    <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
+<body style="background: black">
+    <header>
+        <nav>
+            <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
+            <ul>
+                <li><a href="/" style="color: white">About</a></li>
+                <li><a href="/profile/expenses" style="color: white">Expenses</a></li>
+                <li><a href="/profile" style="color: white">Profile</a>
+                    <ul>
+                        <li><a th:action="@{/logout}" href="/login" method="post" style="color: black"> Sign out </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <aside style="background: white">
+                <h3>Show expenses</h3>
+                <p>Shows all expenses for your company</p>
+                <p><a href="/profile/expenses" target="_blank"><em>Show
+                    ↗</em></a></p>
+            </aside>
+            <aside style="background: white">
+                <h3>Show average consumption</h3>
+                <p>Shows consumptions and graphic for each year and day</p>
+                <p><a href="/profile/average-consumption" target="_blank"><em>Show
+                    ↗</em></a></p>
+            </aside>
+            <aside style="background: white">
+                <h3>Show expenses</h3>
+                <p>Shows all expenses for your company</p>
+                <p><a href="/profile/expenses" target="_blank"><em>Show
+                    ↗</em></a></p>
+            </aside>
+            <aside style="background: white">
+                <h3>Show expenses</h3>
+                <p>Shows all expenses for your company</p>
+                <p><a href="/profile/expenses" target="_blank"><em>Show
+                    ↗</em></a></p>
+            </aside>
+            <aside style="background: white">
+                <h3>Show expenses</h3>
+                <p>Shows all expenses for your company</p>
+                <p><a href="/profile/expenses" target="_blank"><em>Show
+                    ↗</em></a></p>
+            </aside>
+        </section>
+    </main>
+
+    <footer>
+        <hr>
+        <p style="color: white">
+            Made by <a href="https://github.com/Yarkov23" target="_blank">Striukov Yaroslav
+            ↗</a><br>
+        </p>
+    </footer>
 
 </body>
 </html>

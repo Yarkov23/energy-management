@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <style>
+    html {
+      height: 100%;
+    }
+    body {
+      background-image: linear-gradient(to bottom right, #33475b, #0033CC, #FF77CC, rgb(255, 122, 89));
+    }
+  </style>
+</head>
+<body style="background: black">
+<header>
+  <nav>
+    <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
+    <ul>
+      <li><a href="/" style="color: white">FAQ</a></li>
+      <li><a href="/" style="color: white">About</a></li>
+      <li><a href="/profile" style="color: white">Profile</a>
+        <ul>
+          <li><a th:action="@{/logout}" href="/login" method="post" style="color: black"> Sign out </a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+<main>
+    <section>
+        <header>
+            <h1 style="color: white">Expenses</h1>
+        </header>
+        <table style="background: white">
+            <thead>
+            <tr>
+                <th>Company</th>
+                <th>Resource</th>
+                <th>Use Amount</th>
+                <th>Expenses Month</th>
+                <th>Expenses Year</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="expense : ${expenses}">
+                <td th:text="${expense.company.getName()}"></td>
+                <td th:text="${expense.resource.getResourceName()}"></td>
+                <td th:text="${expense.useAmount}"></td>
+                <td th:text="${expense.expensesMonth}"></td>
+                <td th:text="${expense.expensesYear}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+
+</body>
+</html>

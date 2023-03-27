@@ -23,7 +23,7 @@ public class Tariff {
     @Column(name = "price")
     private Long price;
 
-    @Column(name = "tariffCondition")
+    @Column(name = "tariff_condition")
     private String tariffCondition;
 
     @OneToMany(mappedBy = "tariff")

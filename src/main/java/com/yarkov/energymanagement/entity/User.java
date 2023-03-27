@@ -81,8 +81,6 @@ public class User implements UserDetails {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", roleList=" + roleList +
-                ", company=" + company +
                 '}';
     }
 }

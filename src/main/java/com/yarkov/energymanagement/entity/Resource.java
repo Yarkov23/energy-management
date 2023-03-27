@@ -20,7 +20,7 @@ public class Resource {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "resourceName")
+    @Column(name = "resource_name")
     private String resourceName;
 
     @Column(name = "units")
