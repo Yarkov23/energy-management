@@ -13,8 +13,4 @@ public class ResourceCompanyId implements Serializable {
 
     private Long resourceId;
 
-    private Integer expenseMonth;
-
-    private Integer expenseYear;
-
 }

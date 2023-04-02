@@ -1,41 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
-  <meta charset="UTF-8">
-  <title>Profile</title>
-  <style>
-    html {
-      height: 100%;
-    }
-    body {
-      background-image: linear-gradient(to bottom right, #33475b, #0033CC, #FF77CC, rgb(255, 122, 89));
-    }
-  </style>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <title>Expenses Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body style="background: black">
 <header>
-  <nav>
-    <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
-    <ul>
-      <li><a href="/" style="color: white">FAQ</a></li>
-      <li><a href="/" style="color: white">About</a></li>
-      <li><a href="/profile" style="color: white">Profile</a>
+    <nav>
+        <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
         <ul>
-          <li><a th:action="@{/logout}" href="/login" method="post" style="color: black"> Sign out </a></li>
+            <li><a href="/" style="color: white">FAQ</a></li>
+            <li><a href="/" style="color: white">About</a></li>
+            <li><a href="/profile" style="color: white">Profile</a>
+                <ul>
+                    <li><a th:action="@{/logout}" href="/login" method="post" style="color: black"> Sign out </a></li>
+                </ul>
+            </li>
         </ul>
-      </li>
-    </ul>
-  </nav>
-</header>
-<main>
+    </nav>
     <section>
         <header>
-            <h1 style="color: white">Expenses</h1>
+            <h1 style="color: white">Expenses Dashboard</h1>
         </header>
-        <table style="background: white">
-            <thead>
+        <table style="background: white; border: 1px solid black; text-align: center;">
+            <thead style="font-weight: bold;">
             <tr>
                 <th>Company</th>
                 <th>Resource</th>
@@ -46,17 +35,82 @@
             </thead>
             <tbody>
             <tr th:each="expense : ${expenses}">
-                <td th:text="${expense.company.getName()}"></td>
-                <td th:text="${expense.resource.getResourceName()}"></td>
-                <td th:text="${expense.useAmount}"></td>
-                <td th:text="${expense.expensesMonth}"></td>
-                <td th:text="${expense.expensesYear}"></td>
+                <td th:text="${expense.company.getName()}" style="border: 1px solid black;"></td>
+                <td th:text="${expense.resource.getResourceName()}" style="border: 1px solid black;"></td>
+                <td th:text="${expense.useAmount}" style="border: 1px solid black;"></td>
+                <td th:text="${expense.expensesMonth}" style="border: 1px solid black;"></td>
+                <td th:text="${expense.expensesYear}" style="border: 1px solid black;"></td>
             </tr>
             </tbody>
         </table>
     </section>
+    <section>
+        <header>
+            <h1 style="color: white">Expenses by resource in gryvnas</h1>
+        </header>
+        <table style="background: white; border: 1px solid black; text-align: center;">
+            <thead style="font-weight: bold;">
+            <tr>
+                <th>Month</th>
+                <th>Year</th>
+                <th>Resource ID</th>
+                <th>Total Expenses</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="expenseSummary : ${expenseSummaries}">
+                <td th:text="${expenseSummary.month}" style="border: 1px solid black;"></td>
+                <td th:text="${expenseSummary.year}" style="border: 1px solid black;"></td>
+                <td th:text="${expenseSummary.resourceId.getResourceName()}" style="border: 1px solid black;"></td>
+                <td th:text="${expenseSummary.totalExpenses}" style="border: 1px solid black;"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</header>
+<main>
+    <hr>
+    <section>
+        <header>
+            <h1 style="color: white">Expenses Chart</h1>
+        </header>
+        <header>
+            <h3 style="color: white">Resource Use Amount by Month</h3>
+            <form th:action="@{/profile/expenses}" method="post" style="background: white">
+                <label for="year">Select Year:</label>
+                <select id="year" name="year" style="background: white">
+                    <option th:each="y : ${years}" th:value="${y}" th:text="${y}"></option>
+                </select>
+                <button type="submit">Generate Chart</button>
+            </form>
+        </header>
+        <canvas id="myChart" style="background: white"></canvas>
+        <script th:inline="javascript">
+            let ctx = document.getElementById('myChart').getContext('2d');
+            let chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [[${monthLabelList}]],
+                    datasets: [{
+                        label: 'Resource Use Amount',
+                        data: [[${useAmountList}]],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        </script>
+    </section>
 </main>
-
-
 </body>
 </html>

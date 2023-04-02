@@ -1,19 +1,17 @@
 package com.yarkov.energymanagement.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "tariff")
+@Table(name = "tariffs")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Tariff {
 
     @Id
@@ -27,6 +25,7 @@ public class Tariff {
     private String tariffCondition;
 
     @OneToMany(mappedBy = "tariff")
+    @ToString.Exclude
     private Set<ResourceCompany> resourceCompanies;
 
 }

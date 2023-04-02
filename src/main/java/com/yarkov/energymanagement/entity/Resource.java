@@ -1,9 +1,6 @@
 package com.yarkov.energymanagement.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,6 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Resource {
 
     @Id
@@ -26,10 +24,13 @@ public class Resource {
     @Column(name = "units")
     private String unit;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "resource")
     private Set<ResourceCompany> resourceCompanies;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "resource")
     private Set<Expense> resources;
+
 
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <title>Energy indexes</title>
+</head>
+<body style="background: black">
+<header>
+    <nav>
+        <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
+        <ul>
+            <li><a href="/" style="color: white">FAQ</a></li>
+            <li><a href="/" style="color: white">About</a></li>
+            <li><a href="/profile" style="color: white">Profile</a>
+                <ul>
+                    <li><a th:action="@{/logout}" href="/login" method="post" style="color: black"> Sign out </a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <section>
+        <header>
+            <h1 style="color: white">Workdays Dashboard</h1>
+        </header>
+        <table style="background: white; border: 1px solid black; text-align: center;">
+            <thead style="font-weight: bold;">
+            <tr>
+                <th>Year</th>
+                <th>Month</th>
+                <th>Number of Workdays</th>
+                <th>Use amount</th>
+                <th>Average</th>
+                <th>Minimum</th>
+                <th>Maximum</th>
+                <th>Unevenness Coefficient</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="monthWorkdays : ${monthWorkDays}">
+                <td th:text="${monthWorkdays.year}" style="border: 1px solid black;"></td>
+                <td th:text="${monthWorkdays.month}" style="border: 1px solid black;"></td>
+                <td th:text="${monthWorkdays.workDays}" style="border: 1px solid black;"></td>
+                <td th:text="${monthWorkdays.useAmount}" style="border: 1px solid black;"></td>
+                <td th:text="${monthWorkdays.avg}" style="border: 1px solid black;"></td>
+                <td th:text="${monthWorkdays.min}" style="border: 1px solid black;"></td>
+                <td th:text="${monthWorkdays.max}" style="border: 1px solid black;"></td>
+                <td th:text="${monthWorkdays.unevennessCoefficient}" style="border: 1px solid black;"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</header>
+</body>
+</html>
