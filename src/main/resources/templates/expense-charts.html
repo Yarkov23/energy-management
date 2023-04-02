@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Energy charts</title>
+</head>
+<body style="background: black">
+<header>
+    <nav>
+        <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
+        <ul>
+            <li><a href="/" style="color: white">FAQ</a></li>
+            <li><a href="/" style="color: white">About</a></li>
+            <li><a href="/profile" style="color: white">Profile</a>
+                <ul>
+                    <li><a th:action="@{/logout}" href="/login" method="post" style="color: black"> Sign out </a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <header>
+        <h2 style="color: white">Yearly Expense Summary</h2>
+    </header>
+    <table style="background: white; border: 1px solid black; text-align: center;">
+        <thead style="font-weight: bold;">
+        <tr>
+            <th>Year</th>
+            <th>Total Expenses</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry : ${totalByYear}">
+            <td th:text="${entry.getKey()}" style="border: 1px solid black;"></td>
+            <td th:text="${entry.getValue()}" style="border: 1px solid black;"></td>
+        </tr>
+        </tbody>
+    </table>
+</header>
+<main>
+    <hr>
+    <section>
+        <header>
+            <h1 style="color: white">Total use by year chart</h1>
+            <div class="chart-container" style="position: relative; margin:160px; height:80vh; width:160vw">
+                <canvas id="myChart" style="background: white"></canvas>
+            </div>
+        </header>
+        <script th:inline="javascript">
+            let resultMap = [[${totalByYear}]];
+
+            let data = [];
+            let labels = [];
+
+            for (let key in resultMap) {
+                if (resultMap.hasOwnProperty(key)) {
+                    data.push(resultMap[key]);
+                    labels.push(key);
+                }
+            }
+
+            let ctx = document.getElementById("myChart").getContext("2d");
+            let myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Expense Summary",
+                        data: data,
+                        backgroundColor: [
+                            '#FF6384',
+                            '#36A2EB',
+                            '#FFCE56',
+                            '#E7E9ED',
+                            '#4BC0C0',
+                            '#FF8A80',
+                            '#A1887F',
+                            '#81D4FA',
+                            '#DCE775',
+                            '#FFB74D'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        </script>
+    </section>
+</main>
+</body>
+</html>
