@@ -4,6 +4,7 @@ import com.yarkov.energymanagement.entity.Company;
 import com.yarkov.energymanagement.entity.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,16 +14,16 @@ public interface ExpenseRepo extends JpaRepository<Expense, Long> {
 
     List<Expense> findByCompany(Company company);
 
-    @Query("SELECT DISTINCT e.expensesYear FROM Expense e")
-    List<Integer> findDistinctExpensesYears();
+    @Query("SELECT DISTINCT e.expensesYear FROM Expense e WHERE e.company = :company")
+    List<Integer> findDistinctExpensesYearsByCompany(@Param("company") Company company);
 
-    List<Expense> findByExpensesYearOrderByExpensesMonthAsc(Integer expensesYear);
+    List<Expense> findByCompanyAndExpensesYearOrderByExpensesMonthAsc(Company company, Integer expensesYear);
 
-    @Query("SELECT MAX(e.useAmount) FROM Expense e")
-    Double findMax();
+    @Query("SELECT MAX(e.useAmount) FROM Expense e WHERE e.company = :company")
+    Double findMax(@Param("company") Company company);
 
-    @Query("SELECT MIN(e.useAmount) FROM Expense e")
-    Double findMin();
+    @Query("SELECT MIN(e.useAmount) FROM Expense e WHERE e.company = :company")
+    Double findMin(@Param("company") Company company);
 
     @Query("SELECT e.expensesYear, SUM(e.useAmount) " +
             "FROM Expense e " +

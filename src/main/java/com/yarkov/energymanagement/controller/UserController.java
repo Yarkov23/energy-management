@@ -3,6 +3,7 @@ package com.yarkov.energymanagement.controller;
 import com.yarkov.energymanagement.entity.Company;
 import com.yarkov.energymanagement.entity.Expense;
 import com.yarkov.energymanagement.entity.User;
+import com.yarkov.energymanagement.service.CompanyService;
 import com.yarkov.energymanagement.service.ExpenseService;
 import com.yarkov.energymanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +25,21 @@ public class UserController {
 
     private final UserService userService;
     private final ExpenseService expenseService;
+    private final CompanyService companyService;
 
     @Autowired
-    public UserController(UserService userService, ExpenseService expenseService) {
+    public UserController(UserService userService, ExpenseService expenseService, CompanyService companyService) {
         this.userService = userService;
         this.expenseService = expenseService;
+        this.companyService = companyService;
     }
 
     @GetMapping("/expenses")
     public String showExpenseForm(Model model, Principal principal) {
         var expenses = expenseService.getExpensesForCurrentUser(principal);
-        var years = expenseService.findDistinctExpenseYears();
-        var expenseSummaries = expenseService.calculateExpensesByMonthAndResource();
+        var company = companyService.getCompanyByUser(principal);
+        var years = expenseService.findDistinctExpensesYearsByCompany(company);
+        var expenseSummaries = expenseService.calculateExpensesByMonthAndResource(expenses);
 
         model.addAttribute("expenseSummaries", expenseSummaries);
         model.addAttribute("years", years);
@@ -45,21 +49,22 @@ public class UserController {
 
     @PostMapping("/expenses")
     public String showExpenseChart(Model model, @RequestParam("year") Integer year, Principal principal) {
-        var expensesList = expenseService.findByExpensesYearOrderByExpensesMonthAsc(year);
+        var company = companyService.getCompanyByUser(principal);
+        var expensesForUser = expenseService.getExpensesForCurrentUser(principal);
+        var expensesYearOrderByExpensesMonthAsc = expenseService.findByCompanyAndExpensesYearOrderByExpensesMonthAsc(company, year);
         var useAmountList = new ArrayList<>();
         var monthLabelList = new ArrayList<>();
-        var expenseSummaries = expenseService.calculateExpensesByMonthAndResource();
+        var expenseSummaries = expenseService.calculateExpensesByMonthAndResource(expensesForUser);
 
-        for (Expense expenses : expensesList) {
+        for (Expense expenses : expensesYearOrderByExpensesMonthAsc) {
             useAmountList.add(expenses.getUseAmount());
             monthLabelList.add(expenses.getExpensesMonth().toString());
         }
 
-        List<Expense> expenses = expenseService.getExpensesForCurrentUser(principal);
-        List<Integer> years = expenseService.findDistinctExpenseYears();
+        List<Integer> years = expenseService.findDistinctExpensesYearsByCompany(company);
 
         model.addAttribute("years", years);
-        model.addAttribute("expenses", expenses);
+        model.addAttribute("expenses", expensesForUser);
         model.addAttribute("year", year);
         model.addAttribute("expenseSummaries", expenseSummaries);
         model.addAttribute("useAmountList", useAmountList);
@@ -70,8 +75,9 @@ public class UserController {
     @GetMapping("/energy-indexes")
     public String showEnergyIndexes(Model model, Principal principal) {
         var expenses = expenseService.getExpensesForCurrentUser(principal);
-        var monthWorkdays = expenseService.getMonthWorkDays(expenses);
-        var years = expenseService.findDistinctExpenseYears();
+        var company = companyService.getCompanyByUser(principal);
+        var monthWorkdays = expenseService.getMonthWorkDays(expenses, company);
+        var years = expenseService.findDistinctExpensesYearsByCompany(company);
 
         model.addAttribute("monthWorkDays", monthWorkdays);
         model.addAttribute("expenses", expenses);

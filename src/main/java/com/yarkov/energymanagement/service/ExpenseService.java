@@ -38,15 +38,15 @@ public class ExpenseService extends BaseService<Expense, Long, ExpenseRepo> {
         return repository.findByCompany(company);
     }
 
-    public List<Expense> findByExpensesYearOrderByExpensesMonthAsc(Integer expensesYear) {
-        return repository.findByExpensesYearOrderByExpensesMonthAsc(expensesYear);
+    public List<Expense> findByCompanyAndExpensesYearOrderByExpensesMonthAsc(Company company, Integer expensesYear) {
+        return repository.findByCompanyAndExpensesYearOrderByExpensesMonthAsc(company, expensesYear);
     }
 
-    public List<Integer> findDistinctExpenseYears() {
-        return repository.findDistinctExpensesYears();
+    public List<Integer> findDistinctExpensesYearsByCompany(Company company) {
+        return repository.findDistinctExpensesYearsByCompany(company);
     }
 
-    public List<MonthWorkdays> getMonthWorkDays(List<Expense> expenses) {
+    public List<MonthWorkdays> getMonthWorkDays(List<Expense> expenses, Company company) {
         List<MonthWorkdays> monthWorkdays = new ArrayList<>();
 
         Integer year, month, workDays;
@@ -57,7 +57,7 @@ public class ExpenseService extends BaseService<Expense, Long, ExpenseRepo> {
             month = expense.getExpensesMonth();
             workDays = WorkdaysCalculator.getWorkdaysInMonth(year, month);
             avg = expense.getUseAmount() / workDays;
-            unevennessCoefficient = getMax() / getMin();
+            unevennessCoefficient = getMax(company) / getMin(company);
             monthWorkdays.add(new MonthWorkdays(workDays, year, month, expense.getUseAmount(), avg, avg, avg, unevennessCoefficient));
         }
 
@@ -71,11 +71,11 @@ public class ExpenseService extends BaseService<Expense, Long, ExpenseRepo> {
         return findByCompany(company);
     }
 
-    public List<ExpenseSummary> calculateExpensesByMonthAndResource() {
+    public List<ExpenseSummary> calculateExpensesByMonthAndResource(List<Expense> expensesForUser) {
         List<ExpenseSummary> expenses = new ArrayList<>();
         Map<Tuple, Double> expenseMap = new HashMap<>();
 
-        repository.findAll().forEach(expense -> {
+        expensesForUser.forEach(expense -> {
             var resourceId = expense.getResource();
             var companyId = expense.getCompany();
             var useAmount = expense.getUseAmount();
@@ -83,7 +83,7 @@ public class ExpenseService extends BaseService<Expense, Long, ExpenseRepo> {
             var year = expense.getExpensesYear();
 
             ResourceCompany resourceCompany = resourceCompanyService.findByCompanyIdAndResourceId(companyId, resourceId);
-            Tariff tariff = null;
+            Tariff tariff;
             try {
                 tariff = tariffService.findById(resourceCompany.getTariff().getId());
             } catch (NotFoundException e) {
@@ -156,12 +156,12 @@ public class ExpenseService extends BaseService<Expense, Long, ExpenseRepo> {
         return expenseSummary;
     }
 
-    public Double getMax() {
-        return repository.findMax();
+    public Double getMax(Company company) {
+        return repository.findMax(company);
     }
 
-    public Double getMin() {
-        return repository.findMin();
+    public Double getMin(Company company) {
+        return repository.findMin(company);
     }
 
 }
