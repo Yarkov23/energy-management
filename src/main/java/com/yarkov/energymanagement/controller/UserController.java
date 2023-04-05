@@ -2,11 +2,9 @@ package com.yarkov.energymanagement.controller;
 
 import com.yarkov.energymanagement.entity.Company;
 import com.yarkov.energymanagement.entity.Expense;
-import com.yarkov.energymanagement.entity.MonthWorkdays;
 import com.yarkov.energymanagement.entity.User;
 import com.yarkov.energymanagement.service.ExpenseService;
 import com.yarkov.energymanagement.service.UserService;
-import com.yarkov.energymanagement.util.WorkdaysCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/profile")
@@ -34,7 +33,7 @@ public class UserController {
 
     @GetMapping("/expenses")
     public String showExpenseForm(Model model, Principal principal) {
-        var expenses = getExpensesForCurrentUser(principal);
+        var expenses = expenseService.getExpensesForCurrentUser(principal);
         var years = expenseService.findDistinctExpenseYears();
         var expenseSummaries = expenseService.calculateExpensesByMonthAndResource();
 
@@ -56,7 +55,7 @@ public class UserController {
             monthLabelList.add(expenses.getExpensesMonth().toString());
         }
 
-        List<Expense> expenses = getExpensesForCurrentUser(principal);
+        List<Expense> expenses = expenseService.getExpensesForCurrentUser(principal);
         List<Integer> years = expenseService.findDistinctExpenseYears();
 
         model.addAttribute("years", years);
@@ -70,22 +69,9 @@ public class UserController {
 
     @GetMapping("/energy-indexes")
     public String showEnergyIndexes(Model model, Principal principal) {
-        var expenses = getExpensesForCurrentUser(principal);
-
-        var monthWorkdays = new ArrayList<>();
+        var expenses = expenseService.getExpensesForCurrentUser(principal);
+        var monthWorkdays = expenseService.getMonthWorkDays(expenses);
         var years = expenseService.findDistinctExpenseYears();
-
-        Integer year, month, workDays;
-        double avg, unevennessCoefficient;
-
-        for (Expense expense : expenses) {
-            year = expense.getExpensesYear();
-            month = expense.getExpensesMonth();
-            workDays = WorkdaysCalculator.getWorkdaysInMonth(year, month);
-            avg = expense.getUseAmount() / workDays;
-            unevennessCoefficient = expenseService.getMax() / expenseService.getMin();
-            monthWorkdays.add(new MonthWorkdays(workDays, year, month, expense.getUseAmount(), avg, avg, avg, unevennessCoefficient));
-        }
 
         model.addAttribute("monthWorkDays", monthWorkdays);
         model.addAttribute("expenses", expenses);
@@ -94,7 +80,7 @@ public class UserController {
         return "energy-indexes";
     }
 
-    @GetMapping("/expense-charts")
+    @GetMapping("/summary-charts")
     public String showExpenseCharts(Model model, Principal principal) {
 
         String name = principal.getName();
@@ -102,17 +88,19 @@ public class UserController {
         Company company = user.getCompany();
 
         var totalByYear = expenseService.calculateTotalExpensesByYear(company);
+        var totalUseAmount = expenseService.calculateTotalUseAmountByYear(company);
 
+        model.addAttribute("totalUseAmount", totalUseAmount);
         model.addAttribute("totalByYear", totalByYear);
 
-        return "expense-charts";
+        return "summary-charts";
     }
 
-    public List<Expense> getExpensesForCurrentUser(Principal principal) {
-        String email = principal.getName();
-        User user = userService.findByEmail(email);
-        Company company = user.getCompany();
-        return expenseService.findByCompany(company);
+    @GetMapping("/resource-summary")
+    public String showResourceSummaryCharts(Model model, Principal principal) {
+        List<Expense> expensesForCurrentUser = expenseService.getExpensesForCurrentUser(principal);
+        Map<String, Double> expenseSummaryByResource = expenseService.getExpenseSummaryByResource(expensesForCurrentUser);
+        model.addAttribute("expenseSummary", expenseSummaryByResource);
+        return "resource-summary";
     }
-
 }

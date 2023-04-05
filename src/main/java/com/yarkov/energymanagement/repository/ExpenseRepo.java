@@ -24,9 +24,6 @@ public interface ExpenseRepo extends JpaRepository<Expense, Long> {
     @Query("SELECT MIN(e.useAmount) FROM Expense e")
     Double findMin();
 
-//    @Query("SELECT e.expensesYear, SUM(e.useAmount) FROM Expense e GROUP BY e.expensesYear")
-//    List<Object[]> findExpenseSummaryByYear();
-
     @Query("SELECT e.expensesYear, SUM(e.useAmount) " +
             "FROM Expense e " +
             "WHERE e.company = :company " +

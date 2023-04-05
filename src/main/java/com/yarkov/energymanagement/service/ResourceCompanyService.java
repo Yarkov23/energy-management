@@ -13,11 +13,11 @@ public class ResourceCompanyService extends BaseService<ResourceCompany, Resourc
         super(repository);
     }
 
-    ResourceCompany findByCompanyIdAndResourceId(Company company, Resource resource) {
+    public ResourceCompany findByCompanyIdAndResourceId(Company company, Resource resource) {
         return repository.findResourceCompanyByCompanyAndResource(company, resource);
     }
 
-    ResourceCompany findFirstByCompany(Company company) {
+    public ResourceCompany findFirstByCompany(Company company) {
         return repository.findFirstByCompany(company);
     }
 
