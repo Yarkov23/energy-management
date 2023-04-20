@@ -42,7 +42,7 @@ public class AdminController {
                 new Role("ROLE_ADMIN")));
         model.addAttribute("companyList", companyService.getAll());
         model.addAttribute("user", new UserDto());
-        return "addUserForm";
+        return "add-user-form";
     }
 
     @PostMapping("/create")
@@ -83,7 +83,7 @@ public class AdminController {
             model.addAttribute("companyList", companyService.getAll());
             model.addAttribute("allRoles", List.of(new Role("ROLE_USER"),
                     new Role("ROLE_ADMIN")));
-            return "updateUserForm";
+            return "update-user-form";
         } catch (NotFoundException e) {
             throw new RuntimeException(e);
         }

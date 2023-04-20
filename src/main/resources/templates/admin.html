@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+      xsi:schemaLocation="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
-    <style>
-      html {
-        height: 100%;
-      }
-      body {
-        background-image: linear-gradient(to bottom right, #33475b, #0033CC, #FF77CC, rgb(255, 122, 89));
-      }
-  </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <meta charset="UTF-8">
     <title>Admin panel</title>
 </head>
-<body style="background: black">
+<body style="background-color: #36393F">
 
-<header>
-    <nav>
-        <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
-        <ul>
-            <li><a th:action="@{/logout}" href="/login" style="color: white">Sign out</a></li>
+<nav class="my-nav">
+    <div class="logo-container">
+        <a href="/"><img th:src="@{./image/fuelLogo.png}" th:height="60" th:width="60" alt="My Logo"></a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
         </ul>
-    </nav>
+    </div>
+    <div>
+        <ul class="nav-links">
+            <li><a th:action="@{/logout}" href="/login" methods="post"> Sign out </a></li>
+        </ul>
+    </div>
+</nav>
+<header>
     <h1 style="color: white">Accounts list:</h1>
     <section>
         <table style="background: aliceblue">
             <thead>
             <tr>
-                <th> Id </th>
-                <th> Email </th>
-                <th> Company </th>
-                <th> Role </th>
+                <th> Id</th>
+                <th> Email</th>
+                <th> Company</th>
+                <th> Role</th>
             </tr>
             </thead>
             <tbody>
             <tr th:if="${users.isEmpty()}">
-                <td colspan="2"> No users available </td>
+                <td colspan="2"> No users available</td>
             </tr>
             <tr th:each="user : ${users}">
                 <td><span th:text="${user.getId()}"> Id </span></td>
@@ -44,7 +46,8 @@
                 <td><span th:text="${user.getCompany().getName()}"> Company </span></td>
                 <td><span th:text="${user.getRoleList()}"> Role </span></td>
                 <td><a th:href="@{/admin/update/{id}(id=${user.getId()})}"><b>Edit</b></a></td>
-                <td><a th:href="@{/admin/delete/{id}(id=${user.getId()})}"><b style="background: crimson">Delete</b></a></td>
+                <td><a th:href="@{/admin/delete/{id}(id=${user.getId()})}"><b style="background: crimson">Delete</b></a>
+                </td>
             </tr>
             </tbody>
         </table>

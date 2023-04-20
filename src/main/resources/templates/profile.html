@@ -1,63 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+      xsi:schemaLocation="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
     <meta charset="UTF-8">
     <title>Profile</title>
 </head>
-<body style="background: black">
-    <header>
-        <nav>
-            <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
-            <ul>
-                <li><a href="/" style="color: white">About</a></li>
-                <li><a href="/profile/expenses" style="color: white">Expenses</a></li>
-                <li><a href="/profile" style="color: white">Profile</a>
-                    <ul>
-                        <li><a th:action="@{/logout}" href="/login" method="post" style="color: black"> Sign out </a></li>
-                    </ul>
-                </li>
+<body style="background-color: #36393F">
+
+    <nav class="my-nav">
+        <div class="logo-container">
+            <a href="/"><img th:src="@{./image/fuelLogo.png}" th:height="60" th:width="60" alt="My Logo"></a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
             </ul>
-        </nav>
-    </header>
+        </div>
+        <div>
+            <ul class="nav-links">
+                <li><a th:action="@{/logout}" href="/login" methods="post"> Sign out </a></li>
+            </ul>
+        </div>
+    </nav>
+
     <main>
-        <header>
-            <h2 style="color: white">
-                Main functionality:
-            </h2>
-        </header>
         <section>
-            <aside style="background: white">
-                <h3>Show expenses</h3>
-                <p>Shows all expenses for your company</p>
-                <p><a href="/profile/expenses" target="_blank"><em>Show
-                    ↗</em></a></p>
-            </aside>
-            <aside style="background: white">
-                <h3>Show energy indexes</h3>
-                <p>Shows energy indexes for your company</p>
-                <p><a href="/profile/energy-indexes" target="_blank"><em>Show
-                    ↗</em></a></p>
-            </aside>
-            <aside style="background: white">
-                <h3>Show expense summary</h3>
-                <p>Shows summary for all expenses for your company</p>
-                <p><a href="/profile/summary-charts" target="_blank"><em>Show
-                    ↗</em></a></p>
-            </aside>
-            <aside style="background: white">
-                <h3>Show expense summary for resource</h3>
-                <p>Shows expense summary for each resource for your company</p>
-                <p><a href="/profile/resource-summary" target="_blank"><em>Show
-                    ↗</em></a></p>
-            </aside>
-            <aside style="background: white">
-                <h3>Show expenses</h3>
-                <p>Shows all expenses for your company</p>
-                <p><a href="/profile/expenses" target="_blank"><em>Show
-                    ↗</em></a></p>
-            </aside>
+            <div class="panel">
+                <div class="my-card">
+                    <div class="my-card-body">
+                        <h5 class="my-card-title">Show expenses</h5>
+                        <p class="my-card-text">Shows all expenses for your company.</p>
+                        <a href="/profile/expenses" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="my-card">
+                    <div class="my-card-body">
+                        <h5 class="my-card-title">Show energy indexes</h5>
+                        <p class="my-card-text">Shows energy indexes for your company.</p>
+                        <a href="/profile/energy-indexes" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="my-card">
+                    <div class="my-card-body">
+                        <h5 class="my-card-title">Show expense summary</h5>
+                        <p class="my-card-text">Shows summary for all expenses for your company.</p>
+                        <a href="/profile/summary-charts" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="my-card">
+                    <div class="my-card-body">
+                        <h5 class="my-card-title">Show expense summary for resource</h5>
+                        <p class="my-card-text">Shows expense summary for each resource for your company.</p>
+                        <a href="/profile/resource-summary" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="my-card">
+                    <div class="my-card-body">
+                        <h5 class="my-card-title">Show saving measures</h5>
+                        <p class="my-card-text">Shows possibilities for energy saving for your company.</p>
+                        <a href="/profile/energy-saving-measures" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 

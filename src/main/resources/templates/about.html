@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <meta charset="UTF-8">
+    <title>About</title>
+</head>
+<body style="background-color: #36393F">
+<nav class="my-nav">
+    <div class="logo-container">
+        <a href="/"><img th:src="@{./image/fuelLogo.png}" th:height="60" th:width="60" alt="My Logo"></a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </div>
+    <div>
+        <ul class="nav-links">
+            <li><a th:action="@{/logout}" href="/login" methods="post"> Sign out </a></li>
+        </ul>
+    </div>
+</nav>
+<main>
+    <div class="panel">
+        <div class="panel-header">
+            About this website
+        </div>
+        <div class="panel-body">
+            An energy management system (EMS) is a software-based system designed to help organizations manage their energy consumption more efficiently. An EMS is typically used by large commercial or industrial facilities to monitor and control their energy use, reduce costs, and improve sustainability.
+
+            An EMS can be used to track and analyze energy usage data from various sources, such as utility meters, building automation systems, and renewable energy sources. This data can be used to identify energy waste, optimize energy use, and forecast energy consumption. By identifying areas of energy waste, an EMS can help organizations make targeted improvements to their energy systems, such as upgrading inefficient equipment or implementing energy-efficient lighting.
+
+            An EMS typically consists of several components, including data acquisition systems, data analysis software, and control systems. Data acquisition systems collect energy usage data from various sources, while data analysis software processes and analyzes this data to provide insights into energy usage patterns. Control systems are used to adjust energy consumption in real-time based on the insights provided by the data analysis software.
+
+            One of the primary benefits of an EMS is the ability to reduce energy costs by optimizing energy use. By identifying areas of energy waste and making targeted improvements, organizations can reduce their energy consumption and save money on their energy bills. In addition, an EMS can help organizations improve their sustainability by reducing their carbon footprint and minimizing their impact on the environment.
+
+            Overall, an energy management system is a powerful tool for organizations looking to improve their energy efficiency and reduce their energy costs. By providing real-time insights into energy usage and enabling targeted improvements, an EMS can help organizations achieve their sustainability goals while also saving money.
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -25,4 +25,9 @@ public class HomeController {
         return "profile";
     }
 
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
+
 }

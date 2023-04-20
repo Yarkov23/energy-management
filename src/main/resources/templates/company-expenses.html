@@ -2,70 +2,87 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <title>Expenses Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body style="background: black">
-<header>
-    <nav>
-        <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
-        <ul>
-            <li><a href="/" style="color: white">FAQ</a></li>
-            <li><a href="/" style="color: white">About</a></li>
-            <li><a href="/profile" style="color: white">Profile</a>
-                <ul>
-                    <li><a th:action="@{/logout}" href="/login" method="post" style="color: black"> Sign out </a></li>
-                </ul>
-            </li>
+<body style="background-color: #36393F">
+
+<nav class="my-nav">
+    <div class="logo-container">
+        <a href="/"><img th:src="@{./image/fuelLogo.png}" th:height="60" th:width="60" alt="My Logo"></a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/profile" style="color: white">Back</a></li>
         </ul>
-    </nav>
+    </div>
+    <div>
+        <ul class="nav-links">
+            <li><a th:action="@{/logout}" href="/login" methods="post"> Sign out </a></li>
+        </ul>
+    </div>
+</nav>
+<header>
     <section>
-        <header>
-            <h1 style="color: white">Expenses Dashboard</h1>
-        </header>
-        <table style="background: white; border: 1px solid black; text-align: center;">
-            <thead style="font-weight: bold;">
-            <tr>
-                <th>Company</th>
-                <th>Resource</th>
-                <th>Use Amount</th>
-                <th>Expenses Month</th>
-                <th>Expenses Year</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="expense : ${expenses}">
-                <td th:text="${expense.company.getName()}" style="border: 1px solid black;"></td>
-                <td th:text="${expense.resource.getResourceName()}" style="border: 1px solid black;"></td>
-                <td th:text="${expense.useAmount}" style="border: 1px solid black;"></td>
-                <td th:text="${expense.expensesMonth}" style="border: 1px solid black;"></td>
-                <td th:text="${expense.expensesYear}" style="border: 1px solid black;"></td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="panel">
+            <div class="panel-header">
+                <h1 style="color: white">Expenses Dashboard</h1>
+            </div>
+            <div class="panel-body">
+                <table style="background: white; border: 1px solid black; text-align: center;">
+                    <thead style="font-weight: bold;">
+                    <tr>
+                        <th>Company</th>
+                        <th>Resource</th>
+                        <th>Use Amount</th>
+                        <th>Expenses Month</th>
+                        <th>Expenses Year</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="expense : ${expenses}">
+                        <td th:text="${expense.company.getName()}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${expense.resource.getResourceName()}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${expense.useAmount}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${expense.expensesMonth}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${expense.expensesYear}" style="border: 1px solid black; color: black"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </section>
+
+    <hr>
+
     <section>
-        <header>
-            <h1 style="color: white">Expenses by resource in gryvnas</h1>
-        </header>
-        <table style="background: white; border: 1px solid black; text-align: center;">
-            <thead style="font-weight: bold;">
-            <tr>
-                <th>Month</th>
-                <th>Year</th>
-                <th>Resource ID</th>
-                <th>Total Expenses</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="expenseSummary : ${expenseSummaries}">
-                <td th:text="${expenseSummary.month}" style="border: 1px solid black;"></td>
-                <td th:text="${expenseSummary.year}" style="border: 1px solid black;"></td>
-                <td th:text="${expenseSummary.resourceId.getResourceName()}" style="border: 1px solid black;"></td>
-                <td th:text="${expenseSummary.totalExpenses}" style="border: 1px solid black;"></td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="panel">
+            <div class="panel-header">
+                <h1 style="color: white">Expenses by resource in gryvnas</h1>
+            </div>
+            <div class="panel-body">
+                <table style="background: white; border: 1px solid black; text-align: center;">
+                    <thead style="font-weight: bold;">
+                    <tr>
+                        <th>Month</th>
+                        <th>Year</th>
+                        <th>Resource ID</th>
+                        <th>Total Expenses</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="expenseSummary : ${expenseSummaries}">
+                        <td th:text="${expenseSummary.month}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${expenseSummary.year}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${expenseSummary.resourceId.getResourceName()}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${expenseSummary.totalExpenses}" style="border: 1px solid black; color: black"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </section>
 </header>
 <main>

@@ -2,52 +2,62 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <title>Energy indexes</title>
 </head>
-<body style="background: black">
-<header>
-    <nav>
-        <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
-        <ul>
-            <li><a href="/" style="color: white">FAQ</a></li>
-            <li><a href="/" style="color: white">About</a></li>
-            <li><a href="/profile" style="color: white">Profile</a>
-                <ul>
-                    <li><a th:action="@{/logout}" href="/login" method="post" style="color: black"> Sign out </a></li>
-                </ul>
-            </li>
+<body style="background-color: #36393F">
+
+<nav class="my-nav">
+    <div class="logo-container">
+        <a href="/"><img th:src="@{./image/fuelLogo.png}" th:height="60" th:width="60" alt="My Logo"></a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/profile" style="color: white">Back</a></li>
         </ul>
-    </nav>
+    </div>
+    <div>
+        <ul class="nav-links">
+            <li><a th:action="@{/logout}" href="/login" methods="post"> Sign out </a></li>
+        </ul>
+    </div>
+</nav>
+<header>
     <section>
-        <header>
-            <h1 style="color: white">Workdays Dashboard</h1>
-        </header>
-        <table style="background: white; border: 1px solid black; text-align: center;">
-            <thead style="font-weight: bold;">
-            <tr>
-                <th>Year</th>
-                <th>Month</th>
-                <th>Number of Workdays</th>
-                <th>Use amount</th>
-                <th>Average</th>
-                <th>Minimum</th>
-                <th>Maximum</th>
-                <th>Unevenness Coefficient</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="monthWorkdays : ${monthWorkDays}">
-                <td th:text="${monthWorkdays.year}" style="border: 1px solid black;"></td>
-                <td th:text="${monthWorkdays.month}" style="border: 1px solid black;"></td>
-                <td th:text="${monthWorkdays.workDays}" style="border: 1px solid black;"></td>
-                <td th:text="${monthWorkdays.useAmount}" style="border: 1px solid black;"></td>
-                <td th:text="${monthWorkdays.avg}" style="border: 1px solid black;"></td>
-                <td th:text="${monthWorkdays.min}" style="border: 1px solid black;"></td>
-                <td th:text="${monthWorkdays.max}" style="border: 1px solid black;"></td>
-                <td th:text="${monthWorkdays.unevennessCoefficient}" style="border: 1px solid black;"></td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="panel">
+            <div class="panel-header">
+                <h1 style="color: white">Workdays Dashboard</h1>
+            </div>
+            <div class="panel-body">
+                <table style="background: white; color: white; border: 1px solid black; text-align: center;">
+                    <thead style="font-weight: bold;">
+                    <tr>
+                        <th>Year</th>
+                        <th>Month</th>
+                        <th>Number of Workdays</th>
+                        <th>Use amount</th>
+                        <th>Average</th>
+                        <th>Minimum</th>
+                        <th>Maximum</th>
+                        <th>Unevenness Coefficient</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="monthWorkdays : ${monthWorkDays}">
+                        <td th:text="${monthWorkdays.year}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${monthWorkdays.month}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${monthWorkdays.workDays}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${monthWorkdays.useAmount}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${monthWorkdays.avg}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${monthWorkdays.min}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${monthWorkdays.max}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${monthWorkdays.unevennessCoefficient}" style="border: 1px solid black; color: black"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </section>
 </header>
 </body>

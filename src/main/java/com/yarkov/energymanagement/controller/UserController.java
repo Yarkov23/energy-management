@@ -3,6 +3,7 @@ package com.yarkov.energymanagement.controller;
 import com.yarkov.energymanagement.entity.Company;
 import com.yarkov.energymanagement.entity.Expense;
 import com.yarkov.energymanagement.entity.User;
+import com.yarkov.energymanagement.service.ChatGPT;
 import com.yarkov.energymanagement.service.CompanyService;
 import com.yarkov.energymanagement.service.ExpenseService;
 import com.yarkov.energymanagement.service.UserService;
@@ -109,4 +110,19 @@ public class UserController {
         model.addAttribute("expenseSummary", expenseSummaryByResource);
         return "resource-summary";
     }
+
+    @GetMapping("/energy-saving-measures")
+    public String showEnergySavingMeasures(Model model, Principal principal) throws Exception {
+        var company = userService.findByEmail(principal.getName()).getCompany();
+        var measuresForCompany = expenseService.getAllEnergySavingMeasuresForCompany(company);
+
+        var testMeasures = expenseService.getExpensesForCurrentUser(principal);
+
+        String answer = ChatGPT.chatGPT("Describe possible energy saving measure");
+        model.addAttribute("answer", answer);
+
+        model.addAttribute("measuresForCompany", measuresForCompany);
+        return "energy-saving-measures";
+    }
+
 }

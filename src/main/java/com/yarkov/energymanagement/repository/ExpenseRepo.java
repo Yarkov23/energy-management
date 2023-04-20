@@ -2,6 +2,7 @@ package com.yarkov.energymanagement.repository;
 
 import com.yarkov.energymanagement.entity.Company;
 import com.yarkov.energymanagement.entity.Expense;
+import com.yarkov.energymanagement.entity.Resource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,4 +31,7 @@ public interface ExpenseRepo extends JpaRepository<Expense, Long> {
             "WHERE e.company = :company " +
             "GROUP BY e.expensesYear")
     List<Object[]> findExpenseSummaryByYearForCompany(Company company);
+
+    List<Expense> findByCompanyAndResourceOrderByExpensesYearAscExpensesMonthAsc(Company company, Resource resource);
+
 }

@@ -1,6 +1,7 @@
 package com.yarkov.energymanagement.service;
 
 import com.yarkov.energymanagement.entity.*;
+import com.yarkov.energymanagement.entity.dto.EnergySavingMeasure;
 import com.yarkov.energymanagement.entity.dto.ExpenseSummary;
 import com.yarkov.energymanagement.entity.dto.Tuple;
 import com.yarkov.energymanagement.exception.NotFoundException;
@@ -162,6 +163,53 @@ public class ExpenseService extends BaseService<Expense, Long, ExpenseRepo> {
 
     public Double getMin(Company company) {
         return repository.findMin(company);
+    }
+
+    public List<EnergySavingMeasure> getAllEnergySavingMeasuresForCompany(Company company) {
+
+        List<Resource> resourcesList = resourceService.getAll();
+
+        List<EnergySavingMeasure> energySavingMeasuresList = new ArrayList<>();
+
+        for (Resource resource : resourcesList) {
+            List<Expense> expensesList = repository.findByCompanyAndResourceOrderByExpensesYearAscExpensesMonthAsc(company, resource);
+
+            ResourceCompany resourceCompany = resourceCompanyService.findByCompanyIdAndResourceId(company, resource);
+
+            Map<Integer, Map<Integer, Double>> totalCostMap = new HashMap<>();
+            for (Expense expenses : expensesList) {
+                int year = expenses.getExpensesYear();
+                int month = expenses.getExpensesMonth();
+                double useAmount = expenses.getUseAmount();
+                double price = resourceCompany.getTariff().getPrice();
+                double cost = useAmount * price;
+
+                totalCostMap.putIfAbsent(year, new HashMap<>());
+                totalCostMap.get(year).put(month, totalCostMap.getOrDefault(year, new HashMap<>()).getOrDefault(month, 0.0) + cost);
+            }
+
+            for (Integer year : totalCostMap.keySet()) {
+                for (Integer month : totalCostMap.get(year).keySet()) {
+                    Double totalCost = totalCostMap.get(year).get(month);
+                    double potentialSavings = totalCost * 0.1;
+
+                    if (potentialSavings >= 5000.0) {
+                        EnergySavingMeasure energySavingMeasure = new EnergySavingMeasure(resource.getResourceName(), "Upgrade equipment", "Install more energy-efficient equipment", potentialSavings);
+                        energySavingMeasuresList.add(energySavingMeasure);
+                    }
+                    if (potentialSavings >= 1000.0 && potentialSavings < 5000.0) {
+                        EnergySavingMeasure energySavingMeasure = new EnergySavingMeasure(resource.getResourceName(), "Behavior change", "Encourage employees to turn off lights and equipment when not in use", potentialSavings);
+                        energySavingMeasuresList.add(energySavingMeasure);
+                    }
+                    if (potentialSavings < 1000.0) {
+                        EnergySavingMeasure energySavingMeasure = new EnergySavingMeasure(resource.getResourceName(), "Low-cost measures", "Replace incandescent bulbs with LED bulbs", potentialSavings);
+                        energySavingMeasuresList.add(energySavingMeasure);
+                    }
+                }
+            }
+        }
+
+        return energySavingMeasuresList;
     }
 
 }

@@ -1,30 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org"
-      xmlns:form="http://www.w3.org/1999/xhtml">
+      xsi:schemaLocation="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <meta charset="UTF-8">
     <title>Update user</title>
-    <style>
-        html {
-            height: 100%;
-        }
-
-        body {
-            background-image: linear-gradient(to bottom right, #33475b, #0033CC, #FF77CC, rgb(255, 122, 89));
-        }
-    </style>
 </head>
-<body style="background: black">
-<header>
-    <nav>
-        <a href="/"><img alt="Logo" th:src="@{./image/fuelLogo.png}" th:height="80" th:width="80"></a>
-        <ul>
+<body style="background-color: #36393F">
+<nav class="my-nav">
+    <div class="logo-container">
+        <a href="/"><img th:src="@{./image/fuelLogo.png}" th:height="60" th:width="60" alt="My Logo"></a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
             <li><a href="/admin" style="color: white">Back</a></li>
         </ul>
-    </nav>
-</header>
+    </div>
+    <div>
+        <ul class="nav-links">
+            <li><a th:action="@{/logout}" href="/login" methods="post"> Sign out </a></li>
+        </ul>
+    </div>
+</nav>
 <section>
     <form style="background: white" th:action="@{/admin/update}" th:object="${user}" method="post">
         <input type="hidden" th:field="*{id}"/>
