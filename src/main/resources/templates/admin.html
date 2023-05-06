@@ -11,7 +11,7 @@
 
 <nav class="my-nav">
     <div class="logo-container">
-        <a href="/"><img th:src="@{./image/fuelLogo.png}" th:height="60" th:width="60" alt="My Logo"></a>
+        <a href="/"><img th:src="@{./image/logo.png}" th:height="60" th:width="60" alt="My Logo"></a>
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
@@ -25,35 +25,41 @@
     </div>
 </nav>
 <header>
-    <h1 style="color: white">Accounts list:</h1>
     <section>
-        <table style="background: aliceblue">
-            <thead>
-            <tr>
-                <th> Id</th>
-                <th> Email</th>
-                <th> Company</th>
-                <th> Role</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:if="${users.isEmpty()}">
-                <td colspan="2"> No users available</td>
-            </tr>
-            <tr th:each="user : ${users}">
-                <td><span th:text="${user.getId()}"> Id </span></td>
-                <td><span th:text="${user.getEmail()}"> Email </span></td>
-                <td><span th:text="${user.getCompany().getName()}"> Company </span></td>
-                <td><span th:text="${user.getRoleList()}"> Role </span></td>
-                <td><a th:href="@{/admin/update/{id}(id=${user.getId()})}"><b>Edit</b></a></td>
-                <td><a th:href="@{/admin/delete/{id}(id=${user.getId()})}"><b style="background: crimson">Delete</b></a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <a th:href="@{/admin/create}"><b>Add</b></a>
+        <div class="panel">
+            <div class="panel-header">
+                <h1 style="color: white">Accounts list:</h1>
+            </div>
+            <div class="panel-body">
+                <table style="background: aliceblue">
+                    <thead>
+                    <tr>
+                        <th> Id</th>
+                        <th> Email</th>
+                        <th> Company</th>
+                        <th> Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${users.isEmpty()}">
+                        <td colspan="2"> No users available</td>
+                    </tr>
+                    <tr th:each="user : ${users}">
+                        <td style="color: black"><span th:text="${user.getId()}"> Id </span></td>
+                        <td style="color: black"><span th:text="${user.getEmail()}"> Email </span></td>
+                        <td style="color: black"><span th:text="${user.getCompany().getName()}"> Company </span></td>
+                        <td style="color: black"><span th:text="${user.getRoleList()}"> Role </span></td>
+                        <td style="color: black"><a th:href="@{/admin/update/{id}(id=${user.getId()})}"><b>Edit</b></a></td>
+                        <td style="color: black"><a th:href="@{/admin/delete/{id}(id=${user.getId()})}"><b
+                                style="background: crimson">Delete</b></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a th:href="@{/admin/create}"><b style="background-color: green">Add</b></a>
+        </div>
     </section>
 </header>
-
 </body>
 </html>

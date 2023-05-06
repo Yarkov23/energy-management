@@ -10,7 +10,6 @@
 
 <nav class="my-nav">
     <div class="logo-container">
-        <a href="/"><img th:src="@{./image/fuelLogo.png}" th:height="60" th:width="60" alt="My Logo"></a>
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
@@ -49,52 +48,55 @@
 </header>
 <main>
     <hr>
-    <section>
-        <header>
-            <h1 style="color: white">Total use by year chart</h1>
+
+    <div class="panel">
+        <div class="panel-header">
+            <h2 style="color: white">Total use by year chart</h2>
+        </div>
+        <div class="panel-body">
             <div class="chart-container" style="position: relative; margin:160px; height:80vh; width:160vw">
                 <canvas id="myChart" style="background: white"></canvas>
             </div>
-        </header>
-        <script th:inline="javascript">
-            let resultMap = [[${totalByYear}]];
+            <script th:inline="javascript">
+                let resultMap = [[${totalByYear}]];
 
-            let data = [];
-            let labels = [];
+                let data = [];
+                let labels = [];
 
-            for (let key in resultMap) {
-                if (resultMap.hasOwnProperty(key)) {
-                    data.push(resultMap[key]);
-                    labels.push(key);
+                for (let key in resultMap) {
+                    if (resultMap.hasOwnProperty(key)) {
+                        data.push(resultMap[key]);
+                        labels.push(key);
+                    }
                 }
-            }
 
-            let ctx = document.getElementById("myChart").getContext("2d");
-            let myChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: "Expense Summary",
-                        data: data,
-                        backgroundColor: [
-                            '#FF6384',
-                            '#36A2EB',
-                            '#FFCE56',
-                            '#E7E9ED',
-                            '#4BC0C0',
-                            '#FF8A80',
-                            '#A1887F',
-                            '#81D4FA',
-                            '#DCE775',
-                            '#FFB74D'
-                        ],
-                        borderWidth: 1
-                    }]
-                }
-            });
-        </script>
-    </section>
+                let ctx = document.getElementById("myChart").getContext("2d");
+                let myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Expense Summary",
+                            data: data,
+                            backgroundColor: [
+                                '#FF6384',
+                                '#36A2EB',
+                                '#FFCE56',
+                                '#E7E9ED',
+                                '#4BC0C0',
+                                '#FF8A80',
+                                '#A1887F',
+                                '#81D4FA',
+                                '#DCE775',
+                                '#FFB74D'
+                            ],
+                            borderWidth: 1
+                        }]
+                    }
+                });
+            </script>
+        </div>
+    </div>
 </main>
 </body>
 </html>

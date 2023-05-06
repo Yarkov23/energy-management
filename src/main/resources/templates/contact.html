@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <meta charset="UTF-8">
+    <title>Contacts</title>
+</head>
+<body style="background-color: #36393F">
+<nav class="my-nav">
+    <div class="logo-container">
+        <a href="/"><img th:src="@{./image/logo.png}" th:height="60" th:width="60" alt="My Logo"></a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </div>
+    <div>
+        <ul class="nav-links">
+            <li><a th:action="@{/logout}" href="/login" methods="post"> Sign out </a></li>
+        </ul>
+    </div>
+</nav>
+<main>
+    <div class="panel">
+        <div class="panel-header">
+            Бориспільська, 5 Київ 02099. krmknau@gmail.com. 566-01-88
+        </div>
+        <div class="header">
+            <div style="width: 50%; margin: auto;">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20332.217411511363!2d30.61933477431641!3d50.4312805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4c5237c9e42e1%3A0x8b28c21d6ae95ddd!2z0JrQuNGX0LLRgdGM0LrQuNC5INC60L7Qu9C10LTQtiDQutC-0LzQv2DRjtGC0LXRgNC90LjRhSDRgtC10YXQvdC-0LvQvtCz0ZbQuSDRgtCwINC10LrQvtC90L7QvNGW0LrQuCDQndCw0YbRltC-0L3QsNC70YzQvdC-0LPQviDQsNCy0ZbQsNGG0ZbQudC90L7Qs9C-INGD0L3RltCy0LXRgNGB0LjRgtC10YLRgw!5e0!3m2!1sen!2sua!4v1682255848450!5m2!1sen!2sua" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

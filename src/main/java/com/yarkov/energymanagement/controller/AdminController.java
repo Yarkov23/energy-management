@@ -55,7 +55,7 @@ public class AdminController {
         }
 
         User user = new User(userDto.getEmail(),
-                userDto.getPassword(),
+                "{noop}" + userDto.getPassword(),
                 userDto.getRoles(),
                 companyService.findByName(userDto.getCompanyName()));
 
@@ -91,6 +91,9 @@ public class AdminController {
 
     @PostMapping("/update")
     public String updateUser(User user) {
+        String password = "{noop}" + user.getPassword();
+        user.setPassword(password);
+
         userService.save(user);
         return "redirect:/admin";
     }

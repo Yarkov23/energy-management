@@ -16,7 +16,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String main() {
+    public String home() {
         return "main";
     }
 
@@ -28,6 +28,11 @@ public class HomeController {
     @GetMapping("/about")
     public String about() {
         return "about";
+    }
+
+    @GetMapping("/contact")
+    public String contact() {
+        return "contact";
     }
 
 }

@@ -3,13 +3,13 @@
       xsi:schemaLocation="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <meta charset="UTF-8">
     <title>Add user</title>
 </head>
 <body style="background-color: #36393F">
 <nav class="my-nav">
     <div class="logo-container">
-        <a href="/"><img th:src="@{./image/fuelLogo.png}" th:height="60" th:width="60" alt="My Logo"></a>
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
@@ -25,22 +25,31 @@
 </nav>
 <section>
     <form style="background: white" action="#" th:action="@{/admin/create}" th:object="${user}" method="post">
-        <p>Email: <input type="text" th:field="*{email}" required="required"/></p>
-        <p>Password: <input type="text" th:field="*{password}" required="required"/></p>
+        <p>Email: <input type="email" th:field="*{email}" required="required"/></p>
+        <p>Password: <input type="password" th:field="*{password}" required="required"/></p>
         <p>
             <select th:field="*{companyName}" class="form-control" id="dropDownCompany" required="required">
-                <option value="0">select option</option>
+                <option value="">Select company</option>
                 <option th:each="company : ${companyList}" th:value="${company.getName()}"
                         th:text="${company.getName()}"></option>
             </select>
         </p>
         <p>
             <select th:field="*{roles}" class="form-control" id="dropDownRole" required="required">
-                <option value="0">select option</option>
+                <option value="">Select role</option>
                 <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
             </select>
         </p>
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+
+        <p th:if="${#fields.hasErrors()}">
+            <span style="color: red;">Please fix the following errors:</span>
+        <ul>
+            <li th:each="err : ${#fields.errors()}">
+                <span th:text="${err}"></span>
+            </li>
+        </ul>
+        </p>
     </form>
 </section>
 </body>

@@ -10,7 +10,7 @@
 
 <nav class="my-nav">
     <div class="logo-container">
-        <a href="/"><img th:src="@{./image/fuelLogo.png}" th:height="60" th:width="60" alt="My Logo"></a>
+<!--        <a href="/"><img th:src="@{./image/logo.png}" th:height="60" th:width="60" alt="My Logo"></a>-->
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
@@ -44,7 +44,8 @@
                     <tbody>
                     <tr th:each="expense : ${expenses}">
                         <td th:text="${expense.company.getName()}" style="border: 1px solid black; color: black"></td>
-                        <td th:text="${expense.resource.getResourceName()}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${expense.resource.getResourceName()}"
+                            style="border: 1px solid black; color: black"></td>
                         <td th:text="${expense.useAmount}" style="border: 1px solid black; color: black"></td>
                         <td th:text="${expense.expensesMonth}" style="border: 1px solid black; color: black"></td>
                         <td th:text="${expense.expensesYear}" style="border: 1px solid black; color: black"></td>
@@ -76,57 +77,64 @@
                     <tr th:each="expenseSummary : ${expenseSummaries}">
                         <td th:text="${expenseSummary.month}" style="border: 1px solid black; color: black"></td>
                         <td th:text="${expenseSummary.year}" style="border: 1px solid black; color: black"></td>
-                        <td th:text="${expenseSummary.resourceId.getResourceName()}" style="border: 1px solid black; color: black"></td>
-                        <td th:text="${expenseSummary.totalExpenses}" style="border: 1px solid black; color: black"></td>
+                        <td th:text="${expenseSummary.resourceId.getResourceName()}"
+                            style="border: 1px solid black; color: black"></td>
+                        <td th:text="${expenseSummary.totalExpenses}"
+                            style="border: 1px solid black; color: black"></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
+
 </header>
 <main>
     <hr>
     <section>
-        <header>
-            <h1 style="color: white">Expenses Chart</h1>
-        </header>
-        <header>
-            <h3 style="color: white">Resource Use Amount by Month</h3>
-            <form th:action="@{/profile/expenses}" method="post" style="background: white">
-                <label for="year">Select Year:</label>
-                <select id="year" name="year" style="background: white">
-                    <option th:each="y : ${years}" th:value="${y}" th:text="${y}"></option>
-                </select>
-                <button type="submit">Generate Chart</button>
-            </form>
-        </header>
-        <canvas id="expenseChart" style="background: white"></canvas>
-        <script th:inline="javascript">
-            let ctx = document.getElementById('expenseChart').getContext('2d');
-            let expenseChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: [[${monthLabelList}]],
-                    datasets: [{
-                        label: 'Resource Use Amount',
-                        data: [[${useAmountList}]],
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
+        <div class="panel">
+            <div class="panel-header">
+                <h1 style="color: white">Expenses Chart</h1>
+            </div>
+            <div class="panel-body">
+                <h3 style="color: white">Resource Use Amount by Month</h3>
+                <header>
+                    <form th:action="@{/profile/expenses}" method="post" style="background: white">
+                        <label for="year">Select Year:</label>
+                        <select id="year" name="year" style="background: white">
+                            <option th:each="y : ${years}" th:value="${y}" th:text="${y}"></option>
+                        </select>
+                        <button type="submit">Generate Chart</button>
+                    </form>
+                </header>
+                <canvas id="expenseChart" style="background: white"></canvas>
+                <script th:inline="javascript">
+                    let ctx = document.getElementById('expenseChart').getContext('2d');
+                    let expenseChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [[${monthLabelList}]],
+                            datasets: [{
+                                label: 'Resource Use Amount',
+                                data: [[${useAmountList}]],
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
                             }
-                        }]
-                    }
-                }
-            });
-        </script>
+                        }
+                    });
+                </script>
+            </div>
+        </div>
     </section>
 </main>
 </body>

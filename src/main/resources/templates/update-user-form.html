@@ -10,7 +10,6 @@
 <body style="background-color: #36393F">
 <nav class="my-nav">
     <div class="logo-container">
-        <a href="/"><img th:src="@{./image/fuelLogo.png}" th:height="60" th:width="60" alt="My Logo"></a>
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
@@ -28,17 +27,34 @@
     <form style="background: white" th:action="@{/admin/update}" th:object="${user}" method="post">
         <input type="hidden" th:field="*{id}"/>
         <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{email}" required="required"/>
+        <input type="email" id="email" th:field="*{email}" required="required"
+               th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''" />
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}">
+            <span th:errors="*{email}"></span>
+        </div>
         <label for="password">Password:</label>
-        <input type="password" id="password" th:field="*{password}" required="required"/>
-        <select th:field="*{roleList}">
+        <input type="password" id="password" th:field="*{password}" required="required"
+               th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''" />
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}">
+            <span th:errors="*{password}"></span>
+        </div>
+        <select th:field="*{roleList}" required="required"
+                th:classappend="${#fields.hasErrors('roleList')} ? 'is-invalid' : ''">
             <option value="">-- Select Role --</option>
             <option th:each="role : ${allRoles}" th:value="${role}" th:text="${role}"></option>
         </select>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('roleList')}">
+            <span th:errors="*{roleList}"></span>
+        </div>
         <label for="company">Company:</label>
-        <select id="company" th:field="*{company.id}" required="required">
-            <option th:each="c : ${companyList}" th:value="${c.id}" th:text="${c.name}" th:selected="${c.id == user.company?.id}"/>
+        <select id="company" th:field="*{company.id}" required="required"
+                th:classappend="${#fields.hasErrors('company')} ? 'is-invalid' : ''">
+            <option th:each="c : ${companyList}" th:value="${c.id}" th:text="${c.name}"
+                    th:selected="${c.id == user.company?.id}"></option>
         </select>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('company')}">
+            <span th:errors="*{company}"></span>
+        </div>
         <input type="submit" value="Save"/>
     </form>
 </section>
